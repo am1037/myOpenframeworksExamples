@@ -25,5 +25,9 @@ class ofApp : public ofBaseApp{
         // member variables to store the current mouse X and Y position 
         // as a percentage of the width/height of the screen
         float mouseXPercent, mouseYPercent;
+		float keyV;
+		string eventString;
+		ofTrueTypeFont ottf;
+		ofBlendMode blendMode;
 };
 	

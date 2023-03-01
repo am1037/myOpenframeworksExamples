@@ -6,7 +6,8 @@ void ofApp::setup(){
 	ofBackground(0,0,0);
     ofEnableSmoothing();
     ofEnableAlphaBlending();
-	ofSetWindowTitle("color example");
+    ofSetWindowTitle("color example");
+    keyV = 128;
     
     ofSetRectMode(OF_RECTMODE_CENTER);
     
@@ -23,7 +24,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
+
     // here we demonstrate setting colors using HSB (Hue/Saturation/Brightness) rather than the 
     // more well-known RGB (Red/Green/Blue).
     
@@ -57,25 +58,36 @@ void ofApp::draw(){
     // we use one hue (value from 0..255) for the whole grid. it changes over time. we use f to
     // keep the hue value between 0 and 255, it works just like integer modulo (the % operator) but 
     // for floats.
-	float hue = fmodf(ofGetElapsedTimef()*10,255);
+    // 
+	//float hue = fmodf(ofGetElapsedTimef()*10, 255); // ofGetElapsedTimef() 얘가 시작하고 시간 재는거 같음
+    float hue, sat, bri;
     
-    int step = 5;
+    int step = 10;
+    int N = 4;
+    int largeStep = ofGetWidth() / N;
     // step through horizontally
-    for ( int i=0; i<ofGetWidth(); i+=step )
+    for (int k = 0; k < N; k++)
     {
-        // step through vertically
-        for ( int j=0; j<ofGetHeight(); j+=step )
+        for (int i = 0; i < ofGetWidth(); i += step)
         {
-            // set HSB using our hue value that changes over time, saturation from the X position (i), 
-            // and brightness from the Y position (j). we also invert the Y value since it looks 
-            // nicer if the dark/black colors are along the bottom.
-            ofColor c;
-            // the range of each of the arguments here is 0..255 so we map i and j to that range.
-            c.setHsb( hue, ofMap(i, 0,ofGetWidth(), 0,255), ofMap(j, ofGetHeight(),0, 0,255 ) );
-            
-            // assign the color and draw a rectangle
-            ofSetColor( c );
-            ofDrawRectangle( i, j, step-1, step-1 );
+            // step through vertically
+            for (int j = 0; j < ofGetHeight(); j += step)
+            {
+                // set HSB using our hue value that changes over time, saturation from the X position (i), 
+                // and brightness from the Y position (j). we also invert the Y value since it looks 
+                // nicer if the dark/black colors are along the bottom.
+                ofColor c;
+                // the range of each of the arguments here is 0..255 so we map i and j to that range.
+                //hue = (k+1) * fmodf(keyV, 255)/N;
+                hue = (k + 1) * fmodf(ofGetElapsedTimef() * 10, 255) / N;
+                sat = ofMap(i, 0, ofGetWidth(), 0, 255);
+                bri = ofMap(j, ofGetHeight(), 0, 0, 255);
+                c.setHsb(hue, sat, bri);
+
+                // assign the color and draw a rectangle
+                ofSetColor(c);
+                ofDrawRectangle(largeStep*k + i/N, j, (step - 1)/N, step - 1); // (x좌표, y좌표, x길이, y길이)
+            }
         }
     }
     
@@ -114,6 +126,9 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed  (int key){
+    //cout << keyV << endl;
+    //if (key == 57357) { keyV++; }
+    //if (key == 57359&& keyV >= 0) { keyV--; }
 }
 
 //--------------------------------------------------------------
@@ -134,7 +149,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+    if (button == 0) cout << ofMap(x, 0, ofGetWidth(), 0, 255) << ", " << ofMap(y, 0, ofGetHeight(), 0, 255) << endl;
 }
 
 //--------------------------------------------------------------
