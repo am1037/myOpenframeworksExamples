@@ -27,6 +27,10 @@ public:
 	void circleResolutionChanged(int & circleResolution);
 	void ringButtonPressed();
 
+	void testEvent();
+	ofxButton testButton;
+	ofxToggle testToggle;
+
 	bool bHide;
 
 	ofxFloatSlider radius;
