@@ -38,8 +38,8 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	cameraOrbit += ofGetLastFrameTime() * 20.; // 20 degrees per second;
-	cam.orbitDeg(cameraOrbit, 0., cam.getDistance(), {0., 0., 0.});
+	//cameraOrbit += ofGetLastFrameTime() * 20.; // 20 degrees per second;
+	//cam.orbitDeg(cameraOrbit, 0., cam.getDistance(), {0., 0., 0.});
 }
 
 //--------------------------------------------------------------
